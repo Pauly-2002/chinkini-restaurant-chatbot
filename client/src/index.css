@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+@layer components {
+  .heading-primary {
+    @apply text-3xl font-bold text-gray-800 ;
+  }
+
+  .hero-heading {
+    @apply text-[72px] font-bold text-[#191919] leading-none;
+  }
+
+  @keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 18s linear infinite;
+}
+
+  .hero-heading2 {
+    @apply text-[72px] font-bold text-[#CC0000] leading-none;
+  }
+
+  .heading-secondary {
+    @apply text-2xl font-semibold text-gray-800;
+  }
+
+  .hero-paragraph {
+    @apply text-[#737373] text-[20px] font-normal;
+  }
+
+  .paragraph {
+    @apply text-[#64748B] text-[16px];
+  }
+
+  .menu {
+    @apply text-[#5E5E5E] text-[14px];
+  }
+}

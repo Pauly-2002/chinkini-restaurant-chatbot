@@ -1,0 +1,335 @@
+# 🍽️ AI Restaurant Operating System
+
+An AI-powered restaurant management platform that combines:
+
+* 🤖 OpenAI-powered chatbot
+* 🍔 Menu-aware ordering system
+* 📅 Reservation management
+* 🎫 Complaint ticketing
+* 📱 WhatsApp notifications
+* 🔄 Real-time order tracking with Socket.IO
+* 🗄️ MongoDB database
+
+---
+
+# 🚀 Features
+
+## AI Chat Assistant
+
+Customers can interact with an AI assistant to:
+
+* Place food orders
+* View available menu items
+* Submit complaints
+* Contact customer support
+
+---
+
+## Menu Management
+
+Menus are stored in MongoDB and can be dynamically queried by the AI.
+
+Example:
+
+Customer:
+
+> Show me today's menu
+
+Bot:
+
+> 🍔 Burger - ₦2500
+> 🍕 Pizza - ₦4000
+> 🥤 Coke - ₦500
+
+---
+
+## Order Management
+
+The AI extracts structured order information and creates orders automatically.
+
+Example:
+
+Customer:
+
+> I want 2 burgers and 1 coke
+
+AI Extracts:
+
+```json
+{
+  "intent": "ORDER",
+  "items": [
+    {
+      "name": "Burger",
+      "qty": 2
+    },
+    {
+      "name": "Coke",
+      "qty": 1
+    }
+  ]
+}
+```
+
+---
+
+
+## Complaint Management
+
+Customers can create complaint tickets.
+
+Example:
+
+> My food arrived cold
+
+Complaint is stored in MongoDB for review.
+
+---
+
+## WhatsApp Restaurant Notifications
+
+Whenever an order is created:
+
+1. Order is saved in MongoDB
+2. WhatsApp notification is sent to restaurant staff
+3. Staff receives order details instantly
+
+Example:
+
+```
+🚨 NEW ORDER
+
+Order ID: 12345
+
+Items:
+2x Burger
+1x Coke
+
+Total: ₦5500
+```
+
+---
+
+## Real-Time Order Tracking
+
+Socket.IO is used to provide live order status updates.
+
+Order lifecycle:
+
+```
+pending
+↓
+confirmed
+↓
+preparing
+↓
+ready
+↓
+delivered
+```
+
+Customer receives updates instantly without refreshing the page.
+
+Example:
+
+```
+✅ Your order has been confirmed
+🍳 Your food is being prepared
+🚗 Your order is ready
+🎉 Your order has been delivered
+```
+
+---
+
+# 🏗️ Project Architecture
+
+```text
+server/
+│
+├── config/
+│   └── db.js
+│
+├── models/
+│   ├── Menu.js
+│   ├── Order.js
+│   ├── Reservation.js
+│   ├── Complaint.js
+│
+├── controllers/
+│   ├── chatbot.controller.js
+│   ├── order.controller.js
+│
+├── services/
+│   ├── openai.service.js
+│   ├── order.service.js
+│   ├── reservation.service.js
+│   ├── complaint.service.js
+│   ├── menu.service.js
+│   ├── whatsapp.service.js
+│
+├── routes
+│
+├── webhooks/
+│   └── whatsapp.webhook.js
+│
+├── socket.js
+│
+└── server.js
+```
+
+---
+
+# 🧠 AI Intent System
+
+The AI classifies user messages into intents.
+
+Supported intents:
+
+| Intent      | Description             |
+| ----------- | ----------------------- |
+| ORDER       | Create food order       |
+| MENU_QUERY  | Fetch available menu    |          |
+| COMPLAINT   | Create complaint ticket |
+| SUPPORT     | Customer support        |
+| GENERAL     | General conversation    |
+
+---
+
+# ⚙️ Tech Stack
+
+### Frontend
+
+* React
+* Tailwind CSS
+* Axios
+* Socket.IO Client
+
+### Backend
+
+* Node.js
+* Express.js
+* Socket.IO
+* OpenAI API
+* WhatsApp Cloud API
+
+### Database
+
+* MongoDB
+* Mongoose
+
+---
+
+# 🔐 Environment Variables
+
+Create a `.env` file inside the server directory.
+
+```env
+PORT=5000
+
+MONGO_URI=
+
+OPENAI_API_KEY=
+
+WHATSAPP_TOKEN=
+
+WHATSAPP_PHONE_NUMBER_ID=
+
+VERIFY_TOKEN=
+
+RESTAURANT_PHONE=
+```
+
+---
+
+# 📦 Installation
+
+## Backend
+
+```bash
+npm install
+```
+
+Run backend:
+
+```bash
+npm run dev
+```
+
+---
+
+## Frontend
+
+```bash
+npm install
+```
+
+Run frontend:
+
+```bash
+npm run dev
+```
+
+---
+
+# 🔌 Socket.IO
+
+Backend emits:
+
+```js
+io.emit("orderUpdated", {
+  orderId,
+  status,
+});
+```
+
+Frontend listens:
+
+```js
+socket.on("orderUpdated", (data) => {
+  console.log(data);
+});
+```
+
+---
+
+# 📱 WhatsApp Integration
+
+The system uses Meta WhatsApp Cloud API.
+
+Workflow:
+
+```
+Order Created
+      ↓
+WhatsApp Notification
+      ↓
+Restaurant Staff
+      ↓
+Webhook Receives Reply
+      ↓
+Order Status Updated
+      ↓
+Socket.IO Event
+      ↓
+Customer Notification
+```
+
+---
+
+# 📈 Future Improvements
+
+* Customer authentication
+* Admin dashboard
+* Delivery management
+* Multi-restaurant support
+* Payment integration (Paystack, Flutterwave, Stripe)
+* Customer-specific Socket.IO rooms
+* Order analytics dashboard
+* Push notifications
+* Mobile application
+
+---
+
+# 👨‍💻 Author
+
+Built as an AI-powered Restaurant Operating System combining OpenAI, MongoDB, WhatsApp Cloud API, and Socket.IO for real-time restaurant operations.
